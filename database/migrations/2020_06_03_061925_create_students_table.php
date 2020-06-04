@@ -24,9 +24,9 @@ class CreateStudentsTable extends Migration
             $table->bigInteger('phone');
             $table->string('cover_letter');
             $table->string('university');
-            $table->string('workspace');
-            $table->string('employeed');
-            $table->string('verified');            
+            $table->string('workspace')->nullable();
+            $table->string('employeed')->default(0);
+            $table->string('verified')->default(0);            
             $table->timestamps();
         });
     }
