@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use Request;
+use App\Company;
+use App\Category;
 class CompanyController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::all();
+        return view('companies.index', compact('companies')); 
     }
 
     /**
@@ -23,7 +25,8 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('companies.create', compact('categories'));
     }
 
     /**
@@ -34,7 +37,17 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $company = new Company;
+
+        $company->name = $request::input('name');
+        $company->address = $request::input('address');
+        $company->contact = $request::input('contact');
+        $category = Category::find($request::input('category_id'));
+        $category = $category->companies()->save($company);
+        
+        $company->save();
+        return redirect('/companies')->with('success', 'Company is registered Successfully');
+    
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
+use App\Company;
+use App\Job;
 
 class JobController extends Controller
 {
@@ -13,7 +15,8 @@ class JobController extends Controller
      */
     public function index()
     {
-        //
+        $jobs = Job::all();
+        return view('jobs.index', compact('jobs')); 
     }
 
     /**
@@ -23,7 +26,8 @@ class JobController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view('jobs.create', compact('companies'));
     }
 
     /**
@@ -34,7 +38,14 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $job = new Job;
+
+        $job->title = $request::input('title');
+        $job->company_id = $request::input('company_id');
+        $student = Student::find($request::input('company_id'));
+        $student = $student->jobs()->save($job);
+        $job->save();
+        return redirect('/jobs')->with('success', 'job is posted Successfully');
     }
 
     /**

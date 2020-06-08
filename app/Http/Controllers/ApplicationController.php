@@ -13,7 +13,8 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        //
+        $jobs = Job::all();
+        return view('jobs.index', compact('jobs')); 
     }
 
     /**
@@ -23,7 +24,8 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::all();
+        return view('jobs.create', compact('companies'));
     }
 
     /**
@@ -34,7 +36,15 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $resume = new Resume;
+
+        $resume->title = $request::input('title');
+        $resume->education = $request::input('education');
+        $resume->interests = $request::input('interests');
+        $student = student::find($request::input('student_id'));
+        $student = $student->resumes()->save($resume);
+        $resume->save();
+        return redirect('/resumes')->with('success', 'resume is saved Successfully');
     }
 
     /**

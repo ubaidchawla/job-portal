@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Student;
 class StudentController extends Controller
 {
     /**
@@ -38,14 +38,15 @@ class StudentController extends Controller
         $validatedData = $request->validate([
             'regno' => 'required|numeric',
             'fullname' => 'required|max:255',
-            'email' => 'required|unique|max:255',
-            'username' => 'required|unique|max:255',
+            'email' => 'required|max:255',
+            'username' => 'required|max:255',
             'password' => 'required|max:255',
-            'phone' => 'required|numeric'
+            'phone' => 'required|numeric',
+            'university'=>'required|max:255'
         ]);
-        $show = Category::create($validatedData);
+        $show = Student::create($validatedData);
    
-        return redirect('/students')->with('success', 'Student is successfully submitted for verification');
+        return redirect('students')->with('success', 'Student is successfully submitted for verification');
     }
 
     /**

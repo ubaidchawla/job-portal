@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use Request;
+use App\Resume;
+use App\Student;
 class ResumeController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        //
+        $resumes = Resume::all();
+        return view('resumes.index', compact('resumes')); 
     }
 
     /**
@@ -23,7 +25,8 @@ class ResumeController extends Controller
      */
     public function create()
     {
-        //
+        $students = Student::all();
+        return view('resumes.create', compact('students'));
     }
 
     /**
@@ -34,7 +37,15 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $resume = new Resume;
+
+        $resume->title = $request::input('title');
+        $resume->education = $request::input('education');
+        $resume->interests = $request::input('interests');
+        $student = student::find($request::input('student_id'));
+        $student = $student->resumes()->save($resume);
+        $resume->save();
+        return redirect('/resumes')->with('success', 'resume is saved Successfully');
     }
 
     /**

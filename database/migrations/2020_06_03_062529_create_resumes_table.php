@@ -15,7 +15,7 @@ class CreateResumesTable extends Migration
     {
         Schema::create('resumes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('student_regno');
+            $table->bigInteger('student_id');
             $table->string('title');
             $table->string('education');
             $table->string('interests');

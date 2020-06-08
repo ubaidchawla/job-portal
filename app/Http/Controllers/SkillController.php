@@ -13,7 +13,8 @@ class SkillController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('categories.index', compact('categories'));    
     }
 
     /**
@@ -23,7 +24,7 @@ class SkillController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -34,7 +35,12 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255'
+        ]);
+        $show = Category::create($validatedData);
+   
+        return redirect('categories')->with('success', 'Category is successfully saved');
     }
 
     /**

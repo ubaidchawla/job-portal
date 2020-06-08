@@ -10,4 +10,9 @@ class Job extends Model
     {
         return $this->hasMany('App\Application');
     }
+
+    public function company()
+    {
+        return $this->belongsTo('App\Company');
+    }
 }

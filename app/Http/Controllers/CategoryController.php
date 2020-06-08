@@ -40,7 +40,7 @@ class CategoryController extends Controller
         ]);
         $show = Category::create($validatedData);
    
-        return redirect('/categories')->with('success', 'Category is successfully saved');
+        return redirect('categories')->with('success', 'Category is successfully saved');
     }
 
     /**
