@@ -12,7 +12,17 @@
         <option value="{{$student->id}}">{{$student->regno}}</option>
     @endforeach
     </select>
+<br>
+   @foreach($skills as $skill)
+    <input type="checkbox" id="skill" name="skills[]" value="{{$skill->id}}">
+    <label for="{{$skill->name}}">{{$skill->name}}</label>
+    @endforeach
+<br>
     <input type="submit">
 </form>
 </body>
 </html>
+<script>
+$("input:checkbox[type=checkbox]:checked").each(function(){skills.push($(this).val());});                                     
+return skills;
+</script>

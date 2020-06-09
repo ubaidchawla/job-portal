@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use Request;
+use App\Application;
+use App\Company;
+use App\Student;
+use App\Job;
 class ApplicationController extends Controller
 {
     /**
@@ -13,8 +16,8 @@ class ApplicationController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
-        return view('jobs.index', compact('jobs')); 
+        $applications = Application::all();
+        return view('applications.index', compact('applications')); 
     }
 
     /**
@@ -25,7 +28,12 @@ class ApplicationController extends Controller
     public function create()
     {
         $companies = Company::all();
-        return view('jobs.create', compact('companies'));
+        $jobs = Job::all();
+        $students = Student::all();
+        return view('applications.create')
+        ->with(compact('companies'))
+        ->with(compact('jobs'))
+        ->with(compact('students'));
     }
 
     /**
@@ -36,15 +44,15 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        $resume = new Resume;
-
-        $resume->title = $request::input('title');
-        $resume->education = $request::input('education');
-        $resume->interests = $request::input('interests');
-        $student = student::find($request::input('student_id'));
-        $student = $student->resumes()->save($resume);
-        $resume->save();
-        return redirect('/resumes')->with('success', 'resume is saved Successfully');
+        $application = new Application;
+        $company = Company::find($request::input('company_id'));
+        $job = Job::find($request::input('job_id'));
+        $student = Student::find($request::input('student_id'));
+        $company = $company->applications()->save($application);        
+        $job = $job->applications()->save($application);
+        $student = $student->applications()->save($application);
+        $application->save();
+        return redirect('/applications')->with('success', 'application is saved Successfully');
     }
 
     /**

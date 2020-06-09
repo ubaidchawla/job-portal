@@ -21,7 +21,7 @@ class CreateStudentsTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('picture')->nullable();
-            $table->bigInteger('phone');
+            $table->string('phone');
             $table->string('cover_letter')->nullable();
             $table->string('university');
             $table->string('workspace')->nullable();

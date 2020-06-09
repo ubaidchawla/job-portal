@@ -21,7 +21,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/applications', 'ApplicationController');
 Route::resource('/categories', 'CategoryController');
 Route::resource('/students', 'StudentController');
 Route::resource('/companies', 'CompanyController');
 Route::resource('/resumes', 'ResumeController');
+Route::resource('/jobs', 'JobController');
+Route::resource('/skills', 'SkillController');
+

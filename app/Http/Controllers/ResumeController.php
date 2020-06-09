@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Request;
 use App\Resume;
 use App\Student;
+use App\Skill;
 class ResumeController extends Controller
 {
     /**
@@ -26,7 +27,8 @@ class ResumeController extends Controller
     public function create()
     {
         $students = Student::all();
-        return view('resumes.create', compact('students'));
+        $skills = Skill::all();
+        return view('resumes.create', compact('students'), compact('skills'));
     }
 
     /**
@@ -45,6 +47,8 @@ class ResumeController extends Controller
         $student = student::find($request::input('student_id'));
         $student = $student->resumes()->save($resume);
         $resume->save();
+        $skill = Skill::find($request::input('skills'));
+        $resume->skills()->attach($skill);
         return redirect('/resumes')->with('success', 'resume is saved Successfully');
     }
 
